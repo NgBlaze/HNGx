@@ -3,8 +3,9 @@ from datetime import datetime
 import pytz
 
 def get_info(request):
-    slack_name = request.GET.get('slack_name')
-    track_param = request.GET.get('track')
+    # Extract query parameters
+    slack_name = request.GET.get('slack_name', 'Blaze')
+    track = request.GET.get('track', 'backend')
 
     # Define a dictionary to store track information
     tracks = {
@@ -13,7 +14,7 @@ def get_info(request):
     }
 
     # Check if track parameter is valid
-    if track_param not in tracks:
+    if track not in tracks:
         return JsonResponse({"error": "Invalid track parameter"}, status=400)
 
     # Get current day of the week
@@ -33,7 +34,7 @@ def get_info(request):
         "slack_name": slack_name,
         "current_day": current_day,
         "utc_time": current_time,
-        "track": tracks[track_param],
+        "track": tracks.get(track, "Unknown"),
         "github_file_url": github_file_url,
         "github_repo_url": github_repo_url,
         "status_code": 200
