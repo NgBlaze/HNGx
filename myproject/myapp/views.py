@@ -9,7 +9,7 @@ def get_info(request):
 
     # Define a dictionary to store track information
     tracks = {
-        "backend": "Backend",
+        "backend": "backend",
         # Add more tracks if needed
     }
 
